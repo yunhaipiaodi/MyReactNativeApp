@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View ,Button} from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import {StackNavigator,TabNavigator} from 'react-navigation';
 
 class HomeScreen extends React.Component {
   static navigationOptions={
@@ -48,7 +48,26 @@ class DetailScreen extends React.Component {
     }
 }
 
-export default StackNavigator({
+class SettingScreen extends React.Component {
+    static navigationOptions={
+        title:'设置页面',
+    }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text>这是设置页!</Text>
+                <Button
+                    title='跳转到设置页'
+                    onPress = {() => this.props.navigation.navigate('Detail',{
+                        itemId:86,
+                        title:'详情页',
+                    })}/>
+            </View>
+        );
+    }
+}
+
+const homeStack =  StackNavigator({
     Home:{
         screen:HomeScreen,
     },
@@ -66,8 +85,23 @@ export default StackNavigator({
             fontWeight:'bold',
         },
     },
-
 });
+
+const settingStack = StackNavigator({
+    Setting:{
+        screen:SettingScreen,
+    },
+    Detail:{
+        screen:DetailScreen,
+    },
+});
+
+
+export default TabNavigator({
+    Home:{screen:homeStack},
+    Setting:{screen:settingStack},
+});
+
 
 const styles = StyleSheet.create({
   container: {
